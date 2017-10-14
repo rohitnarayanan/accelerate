@@ -1,0 +1,16 @@
+# Spring Config
+spring:
+    application:
+        name: Accelerate
+        index: 1
+
+# Accelerate Config
+accelerate:
+    utils:
+        logging:
+            enabled: true
+            audit: true
+            metrics: true
+            debug: true
+        staticListener:
+            scanBasePackages: accelerate

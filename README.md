@@ -1,2 +1,3 @@
-# accelerate
-Latest repositories for accelerate projects
+# accelerate-utils
+Collection of utility components for java/spring project
+
