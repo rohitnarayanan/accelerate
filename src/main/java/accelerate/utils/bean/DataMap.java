@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
-import accelerate.utils.BasicConstants;
+import accelerate.utils.CommonConstants;
 import accelerate.utils.JSONUtil;
 import accelerate.utils.exception.AccelerateException;
 
@@ -73,7 +73,7 @@ public class DataMap extends HashMap<String, Object> {
 	 * @see java.util.HashMap#get(java.lang.Object)
 	 */
 	public String getString(String aKey) {
-		return StringUtils.defaultString((String) get(aKey), BasicConstants.EMPTY_STRING);
+		return StringUtils.defaultString((String) get(aKey), CommonConstants.EMPTY_STRING);
 	}
 
 	/**

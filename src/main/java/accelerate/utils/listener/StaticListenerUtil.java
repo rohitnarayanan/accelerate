@@ -1,6 +1,6 @@
 package accelerate.utils.listener;
 
-import static accelerate.utils.BasicConstants.COMMA_CHAR;
+import static accelerate.utils.CommonConstants.COMMA_CHAR;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;

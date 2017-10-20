@@ -25,7 +25,7 @@ import org.springframework.util.Assert;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 
-import accelerate.utils.BasicConstants;
+import accelerate.utils.CommonConstants;
 import accelerate.utils.JSONUtil;
 import accelerate.utils.exception.AccelerateException;
 import accelerate.utils.listener.StaticListenerUtil;
@@ -460,7 +460,7 @@ public abstract class AccelerateCache<K, V> implements Serializable {
 	 */
 	private void calculateCacheDuration() {
 		if (this.cacheAge != null) {
-			String[] tokens = StringUtils.split(this.cacheAge, BasicConstants.SPACE_CHAR);
+			String[] tokens = StringUtils.split(this.cacheAge, CommonConstants.SPACE_CHAR);
 			this.cacheDuration = TimeUnit.valueOf(tokens[1]).toMillis(Long.parseLong(tokens[0]));
 		} else {
 			this.cacheDuration = -1;

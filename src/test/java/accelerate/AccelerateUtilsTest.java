@@ -1,6 +1,6 @@
 package accelerate;
 
-import static accelerate.utils.BasicConstants.COMMA_CHAR;
+import static accelerate.utils.CommonConstants.COMMA_CHAR;
 
 import java.util.Arrays;
 import java.util.HashSet;
