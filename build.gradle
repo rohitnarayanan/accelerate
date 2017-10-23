@@ -68,6 +68,11 @@ compileJava {
 	targetCompatibility = javaVersion
 }
 
+compileTestJava {
+	sourceCompatibility = javaVersion
+	targetCompatibility = javaVersion
+}
+
 bootRepackage {
 	enabled = false
 }
@@ -103,7 +108,7 @@ eclipse {
 	}
 	
 	classpath {
-		defaultOutputDir = file("build/classes")
+		defaultOutputDir = file("eclipseBuild")
 		
 		file {
 			whenMerged { classpath ->
