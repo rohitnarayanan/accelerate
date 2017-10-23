@@ -9,12 +9,12 @@ package accelerate.utils;
  * @since October 2, 2017
  */
 @SuppressWarnings("all")
-public final class BasicConstants {
+public final class CommonConstants {
 
 	/**
 	 * hidden constructor
 	 */
-	private BasicConstants() {
+	private CommonConstants() {
 	}
 
 	// General Property Constants

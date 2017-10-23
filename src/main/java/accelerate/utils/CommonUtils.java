@@ -150,7 +150,7 @@ public final class CommonUtils {
 	 */
 	public static String getErrorMessage(Throwable aError) {
 		if (aError == null) {
-			return BasicConstants.EMPTY_STRING;
+			return CommonConstants.EMPTY_STRING;
 		}
 
 		String message = aError.getMessage();
@@ -163,7 +163,7 @@ public final class CommonUtils {
 	 */
 	public static String getErrorLog(Throwable aError) {
 		if (aError == null) {
-			return BasicConstants.EMPTY_STRING;
+			return CommonConstants.EMPTY_STRING;
 		}
 
 		StringWriter writer = new StringWriter();

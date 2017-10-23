@@ -1,6 +1,6 @@
 package accelerate.utils.logging;
 
-import static accelerate.utils.BasicConstants.SPACE_CHAR;
+import static accelerate.utils.CommonConstants.SPACE_CHAR;
 
 import java.util.Arrays;
 import java.util.HashSet;

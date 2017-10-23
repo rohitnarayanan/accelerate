@@ -1,6 +1,6 @@
 package accelerate.utils;
 
-import static accelerate.utils.BasicConstants.EMPTY_STRING;
+import static accelerate.utils.CommonConstants.EMPTY_STRING;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 import java.io.IOException;

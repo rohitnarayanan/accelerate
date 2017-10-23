@@ -1,8 +1,8 @@
 package accelerate.utils.cache;
 
-import static accelerate.utils.BasicConstants.COMMA_CHAR;
-import static accelerate.utils.BasicConstants.DOT_CHAR;
-import static accelerate.utils.BasicConstants.EMPTY_STRING;
+import static accelerate.utils.CommonConstants.COMMA_CHAR;
+import static accelerate.utils.CommonConstants.DOT_CHAR;
+import static accelerate.utils.CommonConstants.EMPTY_STRING;
 import static accelerate.utils.CommonUtils.compare;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -22,7 +22,7 @@ import org.springframework.jmx.export.annotation.ManagedOperation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import accelerate.utils.BasicConstants;
+import accelerate.utils.CommonConstants;
 import accelerate.utils.PropertiesUtil;
 import accelerate.utils.ReflectionUtil;
 import accelerate.utils.exception.AccelerateException;
@@ -113,7 +113,7 @@ public class PropertyCache extends AccelerateCache<String, String> {
 	 *             {@link ReflectionUtil#setFieldValue(Class, Object, String, Object)}
 	 */
 	public PropertyCache(JsonNode aJsonNode) throws AccelerateException {
-		this(BasicConstants.EMPTY_STRING);
+		this(CommonConstants.EMPTY_STRING);
 		Iterator<String> fields = aJsonNode.fieldNames();
 		while (fields.hasNext()) {
 			String field = fields.next();

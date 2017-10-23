@@ -1,6 +1,6 @@
 package accelerate.utils;
 
-import static accelerate.utils.BasicConstants.EMPTY_STRING;
+import static accelerate.utils.CommonConstants.EMPTY_STRING;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -135,7 +135,7 @@ public final class NIOUtil {
 						visitResult = aPreVisitDirectory.apply(aDir);
 					}
 
-					if (aSelector != null && aSelector.apply(aDir, visitResult)) {
+					if ((aSelector != null) && aSelector.apply(aDir, visitResult)) {
 						fileMap.put(getRelativePath(aDir, rootPath), aDir);
 					}
 
@@ -162,7 +162,7 @@ public final class NIOUtil {
 						visitResult = aVisitFile.apply(aFile);
 					}
 
-					if (aSelector != null && aSelector.apply(aFile, visitResult)) {
+					if ((aSelector != null) && aSelector.apply(aFile, visitResult)) {
 						fileMap.put(getRelativePath(aFile, rootPath), aFile);
 					}
 
