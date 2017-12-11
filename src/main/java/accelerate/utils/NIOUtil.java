@@ -7,6 +7,7 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Map;
 import java.util.TreeMap;
@@ -98,6 +99,30 @@ public final class NIOUtil {
 		_LOGGER.trace("getFileExtn: [{}] [{}]", aPath, fileExtn);
 
 		return fileExtn;
+	}
+
+	/**
+	 * @param aPath
+	 * @param aLevel
+	 * @return Relative path
+	 */
+	public static Path getParent(Path aPath, int aLevel) {
+		if (aPath == null) {
+			return Paths.get(EMPTY_STRING);
+		}
+
+		if (aLevel == 0) {
+			return aPath;
+		}
+
+		Path parent = aPath.getParent();
+		for (int idx = 1; idx < aLevel; idx++) {
+			parent = parent.getParent();
+		}
+
+		_LOGGER.trace("getParent: [{}] [{}] [{}]", aPath, aLevel, parent);
+
+		return parent;
 	}
 
 	/**
