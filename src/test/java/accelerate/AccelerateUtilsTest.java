@@ -1,19 +1,12 @@
 package accelerate;
 
-import static accelerate.utils.CommonConstants.COMMA_CHAR;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
-import org.springframework.core.type.filter.AnnotationTypeFilter;
 
-import accelerate.utils.listener.StaticContextListener;
+import accelerate.utils.NIOUtil;
 
 /**
  * Main test class for test.accelerate-utils
@@ -49,21 +42,8 @@ public class AccelerateUtilsTest {
 	 * @throws Exception
 	 */
 	private static void quickTest() throws Exception {
-
-		ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
-		provider.addIncludeFilter(new AnnotationTypeFilter(StaticContextListener.class));
-
-		Set<BeanDefinition> componentSet = new HashSet<>();
-		// provider.findCandidateComponents("accelerate.*")
-		Arrays.stream(StringUtils.split("accelerate", COMMA_CHAR)).parallel().filter(packageName -> {
-			System.err.println("filtering package: " + packageName);
-			return true;// !CommonUtils.compare(packageName, "accelerate");
-		}).forEach(packageName -> {
-			System.err.println("scanning package: " + packageName);
-			componentSet.addAll(provider.findCandidateComponents(packageName));
-		});
-
-		System.err.println("componentSet: " + componentSet.size());
+		Path PATH = Paths.get("C:\\Temp\\test.txt");
+		System.out.println(NIOUtil.getRelativePath(Paths.get("C:\\"), PATH));
 	}
 
 	/**

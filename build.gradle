@@ -108,8 +108,6 @@ eclipse {
 	}
 	
 	classpath {
-		defaultOutputDir = file("eclipseBuild")
-		
 		file {
 			whenMerged { classpath ->
 				classpath.entries.collect { entry ->

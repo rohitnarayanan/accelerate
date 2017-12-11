@@ -1,6 +1,6 @@
 .apt_generated/
 .gradle/
+bin/
 build/
-eclipseBuild/
 logs/
 .DS_Store

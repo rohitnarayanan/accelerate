@@ -2,7 +2,6 @@ package accelerate.utils;
 
 import static accelerate.utils.CommonConstants.EMPTY_STRING;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -29,9 +28,9 @@ import accelerate.utils.exception.AccelerateException;
  */
 public final class NIOUtil {
 	/**
-	 * 
+	 * {@link Logger} instance
 	 */
-	static final Logger LOGGER = LoggerFactory.getLogger(NIOUtil.class);
+	private static final Logger _LOGGER = LoggerFactory.getLogger(NIOUtil.class);
 
 	/**
 	 * hidden constructor
@@ -40,68 +39,81 @@ public final class NIOUtil {
 	}
 
 	/**
-	 * Method to consistently return path in unix format with '/' separator instead
+	 * Method to consistently return path in UNIX format with '/' separator instead
 	 * of '\\' used in windows.
 	 * 
 	 * @param aPath
-	 * @return file name
+	 * @return Path String in UNIX format
 	 */
 	public static String getPathString(Path aPath) {
 		if (aPath == null) {
 			return EMPTY_STRING;
 		}
 
-		return org.springframework.util.StringUtils.cleanPath(aPath.toString());
+		String pathString = org.springframework.util.StringUtils.cleanPath(aPath.toString());
+		_LOGGER.trace("getPathString: [{}] [{}]", aPath, pathString);
+
+		return pathString;
 	}
 
 	/**
 	 * @param aPath
-	 * @return file name
+	 * @return File name
 	 */
 	public static String getFileName(Path aPath) {
 		if (aPath == null) {
 			return EMPTY_STRING;
 		}
 
-		return aPath.toFile().getName();
+		String fileName = aPath.toFile().getName();
+		_LOGGER.trace("getFileName: [{}] [{}]", aPath, fileName);
+		return fileName;
 	}
 
 	/**
 	 * @param aPath
-	 * @return file name
+	 * @return File name without extension
 	 */
 	public static String getBaseName(Path aPath) {
 		if (aPath == null) {
 			return EMPTY_STRING;
 		}
 
-		return FilenameUtils.getBaseName(aPath.toFile().getName());
+		String baseName = FilenameUtils.getBaseName(aPath.toString());
+		_LOGGER.trace("getBaseName: [{}] [{}]", aPath, baseName);
+
+		return baseName;
 	}
 
 	/**
 	 * @param aPath
-	 * @return file extension
+	 * @return File extension
 	 */
 	public static String getFileExtn(Path aPath) {
 		if (aPath == null) {
 			return EMPTY_STRING;
 		}
 
-		return FilenameUtils.getExtension(aPath.toFile().getName());
+		String fileExtn = FilenameUtils.getExtension(aPath.toString());
+		_LOGGER.trace("getFileExtn: [{}] [{}]", aPath, fileExtn);
+
+		return fileExtn;
 	}
 
 	/**
-	 * @param aFile
 	 * @param aRoot
-	 * @return short path
+	 * @param aPath
+	 * @return Relative path
 	 */
-	public static String getRelativePath(Path aFile, Path aRoot) {
-		if (aFile == null) {
+	public static String getRelativePath(Path aRoot, Path aPath) {
+		if (aPath == null) {
 			return EMPTY_STRING;
 		}
 
-		int rootNameCount = (aRoot == null) ? 0 : aRoot.getNameCount();
-		return getPathString(aFile.subpath(rootNameCount, aFile.getNameCount()));
+		String relativePath = getPathString(aRoot.relativize(aPath));
+		_LOGGER.trace("getRelativePath: [{}] [{}] [{}]", aRoot, aPath, relativePath);
+
+		return relativePath;
 	}
 
 	/**
@@ -109,14 +121,14 @@ public final class NIOUtil {
 	 *            path to the file or folder of files
 	 * @param aNamePattern
 	 *            text to be searched in the filename
-	 * @return {@link Map} of {@link File} that match the search criteria
+	 * @return {@link Map} of {@link Path} that match the search criteria
 	 * @throws AccelerateException
 	 *             thrown by
-	 *             {@link #walkFileTree(Path, Function, Function, Function, BiFunction)}
+	 *             {@link #walkFileTree(Path, Function, BiFunction, BiFunction, Function, Function, BiFunction)}
 	 */
-	public static Map<String, Path> findFilesByName(Path aRootPath, String aNamePattern) throws AccelerateException {
+	public static Map<String, Path> searchByName(Path aRootPath, String aNamePattern) throws AccelerateException {
 		return walkFileTree(aRootPath, null, null, null,
-				(aPath, aFileVisitResult) -> StringUtil.grepCheck(aNamePattern, getBaseName(aPath)));
+				aPath -> StringUtil.grepCheck(aNamePattern, getBaseName(aPath)), null, null);
 	}
 
 	/**
@@ -124,82 +136,93 @@ public final class NIOUtil {
 	 *            path to the file or folder of files
 	 * @param aSearchExtn
 	 *            extension of the file
-	 * @return {@link Map} of {@link File} that match the search criteria
+	 * @return {@link Map} of {@link Path} that match the search criteria
 	 * @throws AccelerateException
 	 *             thrown by
-	 *             {@link #walkFileTree(Path, Function, Function, Function, BiFunction)}
+	 *             {@link #walkFileTree(Path, Function, BiFunction, BiFunction, Function, Function, BiFunction)}
 	 */
-	public static Map<String, Path> findFilesByExtn(Path aRootPath, String aSearchExtn) throws AccelerateException {
-		return walkFileTree(aRootPath, null, null, null,
-				(aPath, aFileVisitResult) -> CommonUtils.compare(getFileExtn(aPath), aSearchExtn));
+	public static Map<String, Path> searchByExtn(Path aRootPath, String aSearchExtn) throws AccelerateException {
+		return walkFileTree(aRootPath, null, null, null, aPath -> CommonUtils.compare(getFileExtn(aPath), aSearchExtn),
+				null, null);
 	}
 
 	/**
 	 * @param aRootPath
-	 * @param aSelector
+	 * @param aDirectoryFilter
 	 * @param aPreVisitDirectory
 	 * @param aPostVisitDirectory
+	 * @param aFileFilter
 	 * @param aVisitFile
-	 * @return
+	 * @param aSelector
+	 * @return {@link Map} containing files picked up by given Selector
 	 * @throws AccelerateException
 	 *             {@link IOException} thrown by
 	 *             {@link Files#walkFileTree(Path, FileVisitor)}
 	 */
-	public static Map<String, Path> walkFileTree(Path aRootPath,
-			final Function<Path, FileVisitResult> aPreVisitDirectory,
-			final Function<Path, FileVisitResult> aPostVisitDirectory, final Function<Path, FileVisitResult> aVisitFile,
+	public static Map<String, Path> walkFileTree(Path aRootPath, final Function<Path, Boolean> aDirectoryFilter,
+			final BiFunction<Path, BasicFileAttributes, FileVisitResult> aPreVisitDirectory,
+			final BiFunction<Path, IOException, FileVisitResult> aPostVisitDirectory,
+			final Function<Path, Boolean> aFileFilter, final Function<Path, FileVisitResult> aVisitFile,
 			final BiFunction<Path, FileVisitResult, Boolean> aSelector) throws AccelerateException {
 		final Map<String, Path> fileMap = new TreeMap<>();
 
 		try {
 			Files.walkFileTree(aRootPath, new FileVisitor<Path>() {
 				@Override
-				public FileVisitResult preVisitDirectory(Path aDir, BasicFileAttributes aAttrs) {
-					if (CommonUtils.compare(NIOUtil.getPathString(aDir), NIOUtil.getPathString(aRootPath))) {
-						return FileVisitResult.CONTINUE;
+				public FileVisitResult preVisitDirectory(Path aPath, BasicFileAttributes aAttrs) {
+					if (aDirectoryFilter != null && !aDirectoryFilter.apply(aPath)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					try {
+						if (Files.isSameFile(aPath, aRootPath)) {
+							return FileVisitResult.CONTINUE;
+						}
+					} catch (IOException error) {
+						AccelerateException.checkAndThrow(error);
 					}
 
 					FileVisitResult visitResult = FileVisitResult.CONTINUE;
 					if (aPreVisitDirectory != null) {
-						visitResult = aPreVisitDirectory.apply(aDir);
+						visitResult = aPreVisitDirectory.apply(aPath, aAttrs);
 					}
 
-					if ((aSelector != null) && aSelector.apply(aDir, visitResult)) {
-						fileMap.put(getRelativePath(aDir, aRootPath), aDir);
+					if ((aSelector != null) && aSelector.apply(aPath, visitResult)) {
+						fileMap.put(getRelativePath(aPath, aRootPath), aPath);
 					}
 
 					return visitResult;
 				}
 
 				@Override
-				public FileVisitResult postVisitDirectory(Path aDir, IOException aError) throws IOException {
-					if (aError != null) {
-						throw aError;
-					}
-
+				public FileVisitResult postVisitDirectory(Path aPath, IOException aError) {
 					if (aPostVisitDirectory != null) {
-						return aPostVisitDirectory.apply(aDir);
+						return aPostVisitDirectory.apply(aPath, aError);
 					}
 
 					return FileVisitResult.CONTINUE;
 				}
 
 				@Override
-				public FileVisitResult visitFile(Path aFile, BasicFileAttributes aAttrs) {
-					FileVisitResult visitResult = FileVisitResult.CONTINUE;
-					if (aVisitFile != null) {
-						visitResult = aVisitFile.apply(aFile);
+				public FileVisitResult visitFile(Path aPath, BasicFileAttributes aAttrs) {
+					if (aFileFilter != null && !aFileFilter.apply(aPath)) {
+						return FileVisitResult.CONTINUE;
 					}
 
-					if ((aSelector != null) && aSelector.apply(aFile, visitResult)) {
-						fileMap.put(getRelativePath(aFile, aRootPath), aFile);
+					FileVisitResult visitResult = FileVisitResult.CONTINUE;
+					if (aVisitFile != null) {
+						visitResult = aVisitFile.apply(aPath);
+					}
+
+					if ((aSelector != null) && aSelector.apply(aPath, visitResult)) {
+						fileMap.put(getRelativePath(aPath, aRootPath), aPath);
 					}
 
 					return visitResult;
 				}
 
 				@Override
-				public FileVisitResult visitFileFailed(Path aFile, IOException aError) throws IOException {
+				public FileVisitResult visitFileFailed(Path aPath, IOException aError) throws IOException {
 					if (aError != null) {
 						throw aError;
 					}
@@ -211,6 +234,7 @@ public final class NIOUtil {
 			throw new AccelerateException(error);
 		}
 
+		_LOGGER.trace("walkFileTree: root=[{}], selectCount=[{}]", aRootPath, fileMap.size());
 		return fileMap;
 	}
 }
