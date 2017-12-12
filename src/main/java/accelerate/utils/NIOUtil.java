@@ -68,7 +68,7 @@ public final class NIOUtil {
 			return EMPTY_STRING;
 		}
 
-		String fileName = aPath.toFile().getName();
+		String fileName = aPath.getFileName().toString();
 		_LOGGER.trace("getFileName: [{}] [{}]", aPath, fileName);
 
 		return fileName;

@@ -28,7 +28,7 @@ public class NIOUtilTest {
 	/**
 	 * {@link Path} variable for test
 	 */
-	private static final Path PATH = Paths.get("C:\\Temp\\test.txt");
+	private static final Path PATH = Paths.get("C:/Temp/test.txt");
 
 	/**
 	 * Test method for

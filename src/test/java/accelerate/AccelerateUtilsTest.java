@@ -42,8 +42,8 @@ public class AccelerateUtilsTest {
 	 * @throws Exception
 	 */
 	private static void quickTest() throws Exception {
-		Path PATH = Paths.get("C:\\Temp\\test\\a\\b\\c");
-		System.out.println(NIOUtil.getParent(PATH, 4));
+		Path PATH = Paths.get("C:/Temp/test.txt");
+		System.out.println(NIOUtil.getFileName(PATH));
 	}
 
 	/**
