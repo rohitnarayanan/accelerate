@@ -4,6 +4,7 @@ buildscript {
 	repositories {
 		jcenter()
 	}
+	
 	dependencies {
 		classpath("io.spring.gradle:dependency-management-plugin:$springPlatformGradleVersion")
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
