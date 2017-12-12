@@ -73,7 +73,7 @@ public class NIOUtilTest {
 	@Test
 	public void testGetRelativePath() {
 		Assert.assertEquals("Incorrect relative path", "Temp/test.txt",
-				NIOUtil.getRelativePath(Paths.get("C:\\"), PATH));
+				NIOUtil.getRelativePath(Paths.get("C:/"), PATH));
 	}
 
 	/**
