@@ -68,6 +68,12 @@ public class StaticListenerUtil implements ApplicationListener<ApplicationReadyE
 	/**
 	 * list of base packages to scan for static listeners
 	 */
+	@Value("${accelerate.utils.staticListener.enabled:false}")
+	private boolean enabled;
+
+	/**
+	 * list of base packages to scan for static listeners
+	 */
 	@Value("${accelerate.utils.staticListener.scanBasePackages:}")
 	private String scanBasePackages;
 
@@ -101,6 +107,10 @@ public class StaticListenerUtil implements ApplicationListener<ApplicationReadyE
 		Exception methodError = null;
 
 		try {
+			if (!this.enabled) {
+				_LOGGER.debug("staticListenerUtil not enabled, listeners will not be scanned");
+			}
+
 			this.scanBasePackagesSet = new HashSet<>(
 					Arrays.asList(StringUtils.split(this.scanBasePackages, COMMA_CHAR)));
 			this.scanBasePackagesSet.add("accelerate");
