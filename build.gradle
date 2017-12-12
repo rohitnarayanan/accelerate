@@ -96,16 +96,16 @@ build.finalizedBy install
  */
 eclipse {
 	project {
-		natures = ["org.eclipse.ajdt.ui.ajnature", "org.eclipse.jdt.core.javanature", 
-			"org.eclipse.wst.common.project.facet.core.nature", "org.springframework.ide.eclipse.core.springnature", 
-			"org.eclipse.buildship.core.gradleprojectnature"]
+		natures = ["org.eclipse.buildship.core.gradleprojectnature", "org.eclipse.ajdt.ui.ajnature", 
+			"org.springframework.ide.eclipse.core.springnature", "org.eclipse.wst.common.project.facet.core.nature", 
+			"org.eclipse.jdt.core.javanature"]
 		
-		buildCommand "org.eclipse.jdt.core.javabuilder"
-		buildCommand "org.eclipse.wst.common.project.facet.core.builder"
+		buildCommand "org.eclipse.buildship.core.gradleprojectbuilder"
 		buildCommand "org.eclipse.ajdt.core.ajbuilder"
 		buildCommand "org.springframework.ide.eclipse.core.springbuilder"
 		buildCommand "org.springframework.ide.eclipse.boot.validation.springbootbuilder"
-		buildCommand "org.eclipse.buildship.core.gradleprojectbuilder"
+		buildCommand "org.eclipse.wst.common.project.facet.core.builder"
+		buildCommand "org.eclipse.jdt.core.javabuilder"
 	}
 	
 	classpath {
