@@ -31,7 +31,7 @@ public abstract class AccelerateTask extends DataBean implements Callable<Accele
 	/**
 	 * {@link Logger} instance
 	 */
-	protected static final Logger LOGGER = LoggerFactory.getLogger(AccelerateTask.class);
+	protected static final Logger _LOGGER = LoggerFactory.getLogger(AccelerateTask.class);
 
 	/**
 	 * Key Id for the task
@@ -160,11 +160,11 @@ public abstract class AccelerateTask extends DataBean implements Callable<Accele
 			this.thread = Thread.currentThread();
 			this.startTime = System.currentTimeMillis();
 			this.executing = true;
-			LOGGER.debug("Starting execution for task [{}]", this.taskKey);
+			_LOGGER.debug("Starting execution for task [{}]", this.taskKey);
 			execute();
 			this.complete = true;
 		} catch (Exception error) {
-			LOGGER.warn("Error [{}] in execution for task [{}]", CommonUtils.getErrorMessage(error), this.taskKey);
+			_LOGGER.warn("Error [{}] in execution for task [{}]", CommonUtils.getErrorMessage(error), this.taskKey);
 			this.taskError = error;
 			AccelerateException.checkAndThrow(error);
 		} finally {
@@ -174,7 +174,7 @@ public abstract class AccelerateTask extends DataBean implements Callable<Accele
 			this.postProccessor.accept(this);
 		}
 
-		LOGGER.debug("Completed execution for task [{}]", this.taskKey);
+		_LOGGER.debug("Completed execution for task [{}]", this.taskKey);
 		return this;
 	}
 
@@ -195,20 +195,20 @@ public abstract class AccelerateTask extends DataBean implements Callable<Accele
 	 */
 	final void checkPause() throws AccelerateException {
 		if (!this.pause) {
-			LOGGER.debug("Task [{}] is not paused", this.taskKey);
+			_LOGGER.debug("Task [{}] is not paused", this.taskKey);
 			return;
 		}
 
 		synchronized (this.monitor) {
 			try {
-				LOGGER.debug("Pausing task [{}]", getTaskKey());
+				_LOGGER.debug("Pausing task [{}]", getTaskKey());
 				this.monitor.wait();
 			} catch (InterruptedException error) {
 				throw new AccelerateException(error);
 			}
 		}
 
-		LOGGER.debug("Resuming task [{}]", getTaskKey());
+		_LOGGER.debug("Resuming task [{}]", getTaskKey());
 	}
 
 	/**

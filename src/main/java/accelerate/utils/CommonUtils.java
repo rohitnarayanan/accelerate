@@ -27,9 +27,9 @@ import accelerate.utils.exception.AccelerateException;
  */
 public final class CommonUtils {
 	/**
-	 * 
+	 * {@link Logger} instance
 	 */
-	static final Logger LOGGER = LoggerFactory.getLogger(CommonUtils.class);
+	private static final Logger _LOGGER = LoggerFactory.getLogger(CommonUtils.class);
 
 	/**
 	 * hidden constructor
@@ -181,7 +181,7 @@ public final class CommonUtils {
 	 */
 	public static String executeOSCommand(String aCommand, String[] aEnvSettings, File aExecuteDir) {
 		Assert.state(StringUtils.isNotEmpty(aCommand), "Invalid Input. Command cannot be empty");
-		LOGGER.debug("OSCommand [{}]", aCommand);
+		_LOGGER.debug("OSCommand [{}]", aCommand);
 
 		BufferedReader reader = null;
 		String outputLine = null;
@@ -196,7 +196,7 @@ public final class CommonUtils {
 				outputBuffer.append(outputLine);
 			}
 
-			LOGGER.debug("OSCommand Output =>\n{}", outputBuffer);
+			_LOGGER.debug("OSCommand Output =>\n{}", outputBuffer);
 		} catch (IOException error) {
 			throw new AccelerateException(error);
 		} finally {

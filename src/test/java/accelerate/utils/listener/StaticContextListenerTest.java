@@ -26,7 +26,7 @@ public class StaticContextListenerTest {
 	/**
 	 * {@link Logger} instance
 	 */
-	private static final Logger _logger = LoggerFactory.getLogger(StaticContextListenerTest.class);
+	private static final Logger _LOGGER = LoggerFactory.getLogger(StaticContextListenerTest.class);
 
 	/**
 	 * State flag to be changed by {@link #contextStartListener(ApplicationContext)}
@@ -55,7 +55,7 @@ public class StaticContextListenerTest {
 	 * @param aContext
 	 */
 	public static final void contextStartListener(@SuppressWarnings("unused") ApplicationContext aContext) {
-		_logger.debug("StaticContextListenerTest: Context started");
+		_LOGGER.debug("StaticContextListenerTest: Context started");
 		contextState = 1;
 	}
 

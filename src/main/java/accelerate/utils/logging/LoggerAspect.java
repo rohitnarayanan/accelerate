@@ -46,7 +46,7 @@ public class LoggerAspect {
 	/**
 	 * {@link Logger} instance
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(LoggerAspect.class);
+	private static final Logger _LOGGER = LoggerFactory.getLogger(LoggerAspect.class);
 
 	/**
 	 *
@@ -108,7 +108,7 @@ public class LoggerAspect {
 	 * @throws Throwable
 	 */
 	public Object log(ProceedingJoinPoint aJoinPoint, Log aLog) throws Throwable {
-		if (!LOGGER.isDebugEnabled()) {
+		if (!_LOGGER.isDebugEnabled()) {
 			// System.err.println(String.format("[%s] [%s] [%s]", aJoinPoint.getSignature(),
 			// aLoggable.value(),
 			// JSONUtil.serialize(aLoggable.log())));
@@ -185,11 +185,11 @@ public class LoggerAspect {
 	 * @param aInputParams
 	 */
 	public static final void logInputParams(String aMethodName, Object[] aInputParams) {
-		if (!LOGGER.isDebugEnabled()) {
+		if (!_LOGGER.isDebugEnabled()) {
 			return;
 		}
 
-		LOGGER.debug("{},{},{}", aMethodName, "INPUT",
+		_LOGGER.debug("{},{},{}", aMethodName, "INPUT",
 				(aInputParams.length == 0) ? "[]" : JSONUtil.serialize(aInputParams));
 	}
 
@@ -197,11 +197,11 @@ public class LoggerAspect {
 	 * @param aMethodName
 	 */
 	public static final void logMethodEntry(String aMethodName) {
-		if (!LOGGER.isDebugEnabled()) {
+		if (!_LOGGER.isDebugEnabled()) {
 			return;
 		}
 
-		LOGGER.debug("{},{},{}", aMethodName, "START", System.currentTimeMillis());
+		_LOGGER.debug("{},{},{}", aMethodName, "START", System.currentTimeMillis());
 	}
 
 	/**
@@ -209,11 +209,11 @@ public class LoggerAspect {
 	 * @param aStopWatch
 	 */
 	public static final void logMethodTime(String aMethodName, StopWatch aStopWatch) {
-		if (!LOGGER.isDebugEnabled()) {
+		if (!_LOGGER.isDebugEnabled()) {
 			return;
 		}
 
-		LOGGER.debug("{},{},{}", aMethodName, "TIME", aStopWatch.getTotalTimeMillis());
+		_LOGGER.debug("{},{},{}", aMethodName, "TIME", aStopWatch.getTotalTimeMillis());
 	}
 
 	/**
@@ -221,11 +221,11 @@ public class LoggerAspect {
 	 * @param aError
 	 */
 	public static final void logMethodExit(String aMethodName, Throwable aError) {
-		if (!LOGGER.isDebugEnabled()) {
+		if (!_LOGGER.isDebugEnabled()) {
 			return;
 		}
 
-		LOGGER.debug("{},{},{}", aMethodName, (aError != null) ? "EXIT" : "END", System.currentTimeMillis());
+		_LOGGER.debug("{},{},{}", aMethodName, (aError != null) ? "EXIT" : "END", System.currentTimeMillis());
 	}
 
 	/**
@@ -234,11 +234,11 @@ public class LoggerAspect {
 	 * @param aReturnValue
 	 */
 	public static final void logReturnValue(String aMethodName, String aReturnType, Object aReturnValue) {
-		if (!LOGGER.isDebugEnabled()) {
+		if (!_LOGGER.isDebugEnabled()) {
 			return;
 		}
 
-		LOGGER.debug("{},{},{}", aMethodName, "RETURN",
+		_LOGGER.debug("{},{},{}", aMethodName, "RETURN",
 				CommonUtils.compare("void", aReturnType) ? "VOID" : JSONUtil.serialize(aReturnValue));
 	}
 }

@@ -1,5 +1,6 @@
 package accelerate.utils;
 
+import static accelerate.utils.CommonConstants.DOT_CHAR;
 import static accelerate.utils.CommonConstants.EMPTY_STRING;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Map;
 import java.util.TreeMap;
@@ -68,6 +70,7 @@ public final class NIOUtil {
 
 		String fileName = aPath.toFile().getName();
 		_LOGGER.trace("getFileName: [{}] [{}]", aPath, fileName);
+
 		return fileName;
 	}
 
@@ -142,6 +145,29 @@ public final class NIOUtil {
 	}
 
 	/**
+	 * @param aPath
+	 * @param aNewName
+	 * @return Relative path
+	 * @throws IOException
+	 */
+	public static Path rename(Path aPath, String aNewName) throws IOException {
+		if (aPath == null) {
+			return Paths.get(EMPTY_STRING);
+		}
+
+		if (CommonUtils.isEmptyAll(aNewName)) {
+			return aPath;
+		}
+
+		String extn = getFileExtn(aPath);
+		Path newPath = Files.move(aPath, aPath.getParent().resolve(aNewName + DOT_CHAR + extn),
+				StandardCopyOption.ATOMIC_MOVE);
+		_LOGGER.trace("getRelativePath: [{}] [{}] [{}]", aPath, aNewName, newPath);
+
+		return newPath;
+	}
+
+	/**
 	 * @param aRootPath
 	 *            path to the file or folder of files
 	 * @param aNamePattern
@@ -213,7 +239,7 @@ public final class NIOUtil {
 					}
 
 					if ((aSelector != null) && aSelector.apply(aPath, visitResult)) {
-						fileMap.put(getRelativePath(aPath, aRootPath), aPath);
+						fileMap.put(getRelativePath(aRootPath, aPath), aPath);
 					}
 
 					return visitResult;
@@ -240,7 +266,7 @@ public final class NIOUtil {
 					}
 
 					if ((aSelector != null) && aSelector.apply(aPath, visitResult)) {
-						fileMap.put(getRelativePath(aPath, aRootPath), aPath);
+						fileMap.put(getRelativePath(aRootPath, aPath), aPath);
 					}
 
 					return visitResult;

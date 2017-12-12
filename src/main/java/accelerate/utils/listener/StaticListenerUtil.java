@@ -56,7 +56,7 @@ public class StaticListenerUtil implements ApplicationListener<ApplicationReadyE
 	/**
 	 * {@link Logger} instance
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(StaticListenerUtil.class);
+	private static final Logger _LOGGER = LoggerFactory.getLogger(StaticListenerUtil.class);
 
 	/**
 	 * static {@link ApplicationContext} instance, to provide spring beans access to
@@ -104,7 +104,7 @@ public class StaticListenerUtil implements ApplicationListener<ApplicationReadyE
 			this.scanBasePackagesSet = new HashSet<>(
 					Arrays.asList(StringUtils.split(this.scanBasePackages, COMMA_CHAR)));
 			this.scanBasePackagesSet.add("accelerate");
-			LOGGER.debug("scanBasePackagesSet: {}", this.scanBasePackagesSet);
+			_LOGGER.debug("scanBasePackagesSet: {}", this.scanBasePackagesSet);
 
 			initializeContextListenerMap();
 			initializeCacheListenerMap();
@@ -154,7 +154,7 @@ public class StaticListenerUtil implements ApplicationListener<ApplicationReadyE
 	private void initializeContextListenerMap() throws AccelerateException {
 		this.staticContextListeners = findCandidateComponents(StaticContextListener.class).stream()
 				.flatMap(beanDefinition -> {
-					LOGGER.debug("Registering StaticContextListener [{}]", beanDefinition.getBeanClassName());
+					_LOGGER.debug("Registering StaticContextListener [{}]", beanDefinition.getBeanClassName());
 
 					AnnotationAttributes annotationAttributes = getAnnotationAttributes(beanDefinition,
 							StaticContextListener.class);
@@ -176,7 +176,7 @@ public class StaticListenerUtil implements ApplicationListener<ApplicationReadyE
 	 */
 	private void initializeCacheListenerMap() throws AccelerateException {
 		this.staticCacheListeners = findCandidateComponents(StaticCacheListener.class).stream().map(beanDefinition -> {
-			LOGGER.debug("Registering StaticCacheListener [{}]", beanDefinition.getBeanClassName());
+			_LOGGER.debug("Registering StaticCacheListener [{}]", beanDefinition.getBeanClassName());
 
 			AnnotationAttributes annotationAttributes = getAnnotationAttributes(beanDefinition,
 					StaticCacheListener.class);

@@ -42,7 +42,7 @@ public class AccelerateBatch<T extends AccelerateTask> extends ThreadPoolTaskExe
 	/**
 	 * {@link Logger} instance
 	 */
-	protected static final Logger LOGGER = LoggerFactory.getLogger(AccelerateBatch.class);
+	private static final Logger _LOGGER = LoggerFactory.getLogger(AccelerateBatch.class);
 
 	/**
 	 * Name of the Batch
@@ -149,9 +149,9 @@ public class AccelerateBatch<T extends AccelerateTask> extends ThreadPoolTaskExe
 	public synchronized void shutdown(TimeUnit aTimeUnit, long aTimeout) {
 		Assert.state(this.initialized, "Batch not initialized");
 
-		LOGGER.debug("Shutdown requested in [{}] seconds", aTimeUnit.toSeconds(aTimeout));
+		_LOGGER.debug("Shutdown requested in [{}] seconds", aTimeUnit.toSeconds(aTimeout));
 		setAwaitTerminationSeconds((int) aTimeUnit.toSeconds(aTimeout));
-		this.shutdown();
+		shutdown();
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class AccelerateBatch<T extends AccelerateTask> extends ThreadPoolTaskExe
 	public synchronized void pause() {
 		Assert.state(this.initialized, "Batch not initialized");
 
-		LOGGER.debug("Pausing [{}] tasks ", this.tasks.size());
+		_LOGGER.debug("Pausing [{}] tasks ", this.tasks.size());
 		this.paused = true;
 		this.tasks.values().forEach(task -> task.pause(this.monitor));
 	}
@@ -182,7 +182,7 @@ public class AccelerateBatch<T extends AccelerateTask> extends ThreadPoolTaskExe
 	public synchronized void resume() {
 		Assert.state(this.initialized, "Batch not initialized");
 
-		LOGGER.debug("Resuming [{}] tasks ", this.tasks.size());
+		_LOGGER.debug("Resuming [{}] tasks ", this.tasks.size());
 		this.paused = false;
 		this.tasks.values().forEach(task -> task.resume());
 
@@ -224,7 +224,7 @@ public class AccelerateBatch<T extends AccelerateTask> extends ThreadPoolTaskExe
 		Assert.state(this.initialized, "Batch not initialized");
 		Assert.notEmpty(aTaskList, "No tasks provided");
 
-		LOGGER.debug("Submitting [{}] tasks ", aTaskList.size());
+		_LOGGER.debug("Submitting [{}] tasks ", aTaskList.size());
 
 		aTaskList.stream().forEach(task -> {
 			this.tasks.put(task.getTaskKey(), task);
