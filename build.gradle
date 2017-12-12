@@ -96,8 +96,9 @@ build.finalizedBy install
  */
 eclipse {
 	project {
-		natures = ["org.eclipse.jdt.core.javanature", "org.eclipse.wst.common.project.facet.core.nature",
-			"org.eclipse.ajdt.ui.ajnature","org.springframework.ide.eclipse.core.springnature", "org.eclipse.buildship.core.gradleprojectnature"]
+		natures = ["org.eclipse.ajdt.ui.ajnature", "org.eclipse.jdt.core.javanature", 
+			"org.eclipse.wst.common.project.facet.core.nature", "org.springframework.ide.eclipse.core.springnature", 
+			"org.eclipse.buildship.core.gradleprojectnature"]
 		
 		buildCommand "org.eclipse.jdt.core.javabuilder"
 		buildCommand "org.eclipse.wst.common.project.facet.core.builder"
