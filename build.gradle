@@ -50,9 +50,9 @@ dependencies {
 	implementation ("org.springframework.boot:spring-boot-starter-aop")
 	implementation ("org.springframework:spring-jdbc")
 	implementation ("javax.servlet:javax.servlet-api")
-	implementation ("com.fasterxml.jackson.core:jackson-annotations")
-	implementation ("com.fasterxml.jackson.core:jackson-core")
 	implementation ("com.fasterxml.jackson.core:jackson-databind")
+	//implementation ("com.fasterxml.jackson.core:jackson-annotations")
+	//implementation ("com.fasterxml.jackson.core:jackson-core")
 	implementation ("org.apache.commons:commons-lang3")
 	implementation ("commons-io:commons-io")
 	
