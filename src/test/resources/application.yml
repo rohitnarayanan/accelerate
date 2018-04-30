@@ -1,5 +1,8 @@
 # Spring Config
 spring:
+    profiles:
+        active: accelerate,accelerate.logging
+    
     application:
         name: Accelerate
         index: 1
@@ -8,7 +11,6 @@ spring:
 accelerate:
     utils:
         logging:
-            enabled: true
             audit: true
             metrics: true
             debug: true

@@ -14,8 +14,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -37,11 +37,11 @@ import accelerate.utils.logging.Log.LogType;
  * @author Rohit Narayanan
  * @since October 2, 2017
  */
+@Profile("accelerate.logging")
 @Aspect
 @Order(Ordered.LOWEST_PRECEDENCE)
 @Component
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@ConditionalOnProperty("accelerate.utils.logging.enabled")
 public class LoggerAspect {
 	/**
 	 * {@link Logger} instance
@@ -49,19 +49,19 @@ public class LoggerAspect {
 	private static final Logger _LOGGER = LoggerFactory.getLogger(LoggerAspect.class);
 
 	/**
-	 *
+	 * Flag to indicate whether audit logs are enabled
 	 */
 	@Value("${accelerate.utils.logging.audit:false}")
 	private boolean auditFlag = false;
 
 	/**
-	 *
+	 * Flag to indicate whether metric logs are enabled
 	 */
 	@Value("${accelerate.utils.logging.metrics:false}")
 	private boolean metricsFlag = false;
 
 	/**
-	 *
+	 * Flag to indicate whether debug logs are enabled
 	 */
 	@Value("${accelerate.utils.logging.debug:false}")
 	private boolean debugFlag = false;
@@ -78,8 +78,6 @@ public class LoggerAspect {
 	 */
 	@Around("execution(* *.*(..)) && within(@accelerate.utils.logging.Log *) && !@annotation(accelerate.utils.logging.Log)")
 	public Object catchMethodInAnnotatedClass(ProceedingJoinPoint aJoinPoint) throws Throwable {
-		System.err.println("+++" + aJoinPoint.getSignature());
-
 		return log(aJoinPoint, aJoinPoint.getTarget().getClass().getDeclaredAnnotation(Log.class));
 	}
 
@@ -109,9 +107,6 @@ public class LoggerAspect {
 	 */
 	public Object log(ProceedingJoinPoint aJoinPoint, Log aLog) throws Throwable {
 		if (!_LOGGER.isDebugEnabled()) {
-			// System.err.println(String.format("[%s] [%s] [%s]", aJoinPoint.getSignature(),
-			// aLoggable.value(),
-			// JSONUtil.serialize(aLoggable.log())));
 			return aJoinPoint.proceed();
 		}
 

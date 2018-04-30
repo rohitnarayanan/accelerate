@@ -206,7 +206,7 @@ public class PropertyCache extends AccelerateCache<String, String> {
 		 * If configQuery is not set or db loading is disabled in the property file then
 		 * skip loading properties from database.
 		 */
-		if (!isEmpty(getConfigQuery()) && !compare(aCacheMap.get("fetchFromDB"), Boolean.TRUE.toString())) {
+		if (compare(aCacheMap.get("dbProperties"), Boolean.TRUE.toString()) && !isEmpty(getConfigQuery())) {
 			/*
 			 * Query the database
 			 */

@@ -16,7 +16,6 @@ import java.util.TreeMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,7 +82,11 @@ public final class NIOUtil {
 			return EMPTY_STRING;
 		}
 
-		String baseName = FilenameUtils.getBaseName(aPath.toString());
+		String fileName = getFileName(aPath);
+		int extnIndex = fileName.lastIndexOf(CommonConstants.DOT_CHAR);
+		extnIndex = (extnIndex == -1) ? fileName.length() : extnIndex;
+		String baseName = fileName.substring(0, extnIndex);
+
 		_LOGGER.trace("getBaseName: [{}] [{}]", aPath, baseName);
 
 		return baseName;
@@ -98,7 +101,10 @@ public final class NIOUtil {
 			return EMPTY_STRING;
 		}
 
-		String fileExtn = FilenameUtils.getExtension(aPath.toString());
+		String fileName = getFileName(aPath);
+		int extnIndex = fileName.lastIndexOf(CommonConstants.DOT_CHAR);
+		String fileExtn = (extnIndex == -1) ? CommonConstants.EMPTY_STRING : fileName.substring(extnIndex + 1);
+
 		_LOGGER.trace("getFileExtn: [{}] [{}]", aPath, fileExtn);
 
 		return fileExtn;

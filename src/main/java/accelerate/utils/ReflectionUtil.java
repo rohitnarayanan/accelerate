@@ -18,7 +18,6 @@ import accelerate.utils.exception.AccelerateException;
  * @since October 2, 2017
  */
 public final class ReflectionUtil {
-
 	/**
 	 * hidden constructor
 	 */

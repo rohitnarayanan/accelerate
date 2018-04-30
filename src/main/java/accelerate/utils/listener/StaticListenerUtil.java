@@ -27,6 +27,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Component;
@@ -46,6 +47,7 @@ import accelerate.utils.logging.LoggerAspect;
  * @author Rohit Narayanan
  * @since October 2, 2017
  */
+@Profile("accelerate")
 @Component
 public class StaticListenerUtil implements ApplicationListener<ApplicationReadyEvent>, Serializable {
 	/**

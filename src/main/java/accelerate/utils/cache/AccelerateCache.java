@@ -35,7 +35,7 @@ import accelerate.utils.logging.LoggerAspect;
 /**
  * This is a generic {@link Map} based cache stored on the JVM heap. It has no
  * persistence mechanism. It is designed to be loaded at startup and provide
- * quick lookup to small data sets. Accelerate also provides JMX operations to
+ * quick lookup for small data sets. Accelerate also provides JMX operations to
  * manage the cache and a web UI to view the cache.
  * 
  * It is not a replacement for more comprehensive caching frameworks like
@@ -50,7 +50,7 @@ import accelerate.utils.logging.LoggerAspect;
  * @author Rohit Narayanan
  * @since October 2, 2017
  */
-@ManagedResource
+@ManagedResource(description = "Generic Map providing easy-to-use cache for small static data sets")
 public abstract class AccelerateCache<K, V> implements Serializable {
 	/**
 	 * serialVersionUID

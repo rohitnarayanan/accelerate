@@ -8,9 +8,8 @@ package accelerate.utils;
  * @author Rohit Narayanan
  * @since October 2, 2017
  */
-@SuppressWarnings("all")
+@SuppressWarnings("javadoc")
 public final class CommonConstants {
-
 	/**
 	 * hidden constructor
 	 */

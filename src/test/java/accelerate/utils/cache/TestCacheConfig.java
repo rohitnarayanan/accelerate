@@ -17,6 +17,8 @@ public class TestCacheConfig {
 	 */
 	@Bean(name = "CacheTestCache")
 	public static PropertyCache cacheTestCache() {
-		return new PropertyCache("CacheTestCache");
+		PropertyCache cache = new PropertyCache("CacheTestCache");
+		cache.setConfigURL("TestCache.properties");
+		return cache;
 	}
 }

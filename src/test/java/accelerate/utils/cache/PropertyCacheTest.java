@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -16,17 +17,23 @@ import accelerate.AccelerateUtilsTest;
  * @author Rohit Narayanan
  * @since October 6, 2017
  */
-@SpringBootTest(classes = AccelerateUtilsTest.class)
+@SpringBootTest(classes = { AccelerateUtilsTest.class, TestCacheConfig.class })
 @RunWith(SpringRunner.class)
 @SuppressWarnings("static-method")
 public class PropertyCacheTest {
+	/**
+	 * {@link PropertyCache} instance
+	 */
+	@Autowired
+	private PropertyCache cache = null;
+
 	/**
 	 * Test method for
 	 * {@link accelerate.utils.cache.PropertyCache#PropertyCache(java.lang.String)}.
 	 */
 	@Test
 	public void testPropertyCacheString() {
-		assertTrue("Not yet implemented", true);
+		assertTrue("Not yet implemented", "value1".equals(this.cache.get("key1")));
 	}
 
 	/**

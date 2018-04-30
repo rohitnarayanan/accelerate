@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
@@ -15,6 +16,7 @@ import org.springframework.util.ReflectionUtils;
  * @author Rohit Narayanan
  * @since December 11, 2017
  */
+@Profile("accelerate.logging")
 @Component
 public class LoggerConfig implements BeanPostProcessor {
 	/*

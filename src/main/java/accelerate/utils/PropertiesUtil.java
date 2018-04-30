@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.context.ApplicationContext;
 
 import accelerate.utils.exception.AccelerateException;
@@ -32,8 +31,8 @@ public final class PropertiesUtil {
 	 */
 	public static Properties LoadProperties(ApplicationContext aApplicationContext, String aConfigPath)
 			throws AccelerateException {
-		try {
-			return LoadProperties(aApplicationContext.getResource(aConfigPath).getInputStream());
+		try (InputStream inputStream = aApplicationContext.getResource(aConfigPath).getInputStream()) {
+			return LoadProperties(inputStream);
 		} catch (IOException error) {
 			throw new AccelerateException(error);
 		}
@@ -52,8 +51,6 @@ public final class PropertiesUtil {
 			return properties;
 		} catch (IOException error) {
 			throw new AccelerateException(error);
-		} finally {
-			IOUtils.closeQuietly(aInputStream);
 		}
 	}
 }

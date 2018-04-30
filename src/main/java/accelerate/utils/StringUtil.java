@@ -21,7 +21,6 @@ import org.apache.commons.lang3.StringUtils;
  * @since October 2, 2017
  */
 public final class StringUtil {
-
 	/**
 	 * hidden constructor
 	 */

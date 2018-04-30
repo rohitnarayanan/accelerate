@@ -25,7 +25,7 @@ public class AccelerateUtilsTest {
 	public static void main(String[] args) {
 		int i = 0;
 		try {
-			// i = 1;
+			i = 1;
 			if (i > 0) {
 				runApplication();
 			} else {
@@ -44,18 +44,14 @@ public class AccelerateUtilsTest {
 	private static void quickTest() throws Exception {
 		Path PATH = Paths.get("C:/Temp/test.txt");
 		System.out.println(NIOUtil.getFileName(PATH));
+		System.out.println(NIOUtil.getBaseName(PATH));
+		System.out.println(NIOUtil.getFileExtn(PATH));
 	}
 
 	/**
 	 * Method to run spring boot application
 	 */
 	private static void runApplication() {
-		// String[] arguments = new String[] { "--spring.profiles.active=none" };
-		// SpringApplication springApplication = new
-		// SpringApplication(AccelerateUtilsTest.class);
-		// springApplication.setAdditionalProfiles("profile1", "profile2");
-		// springApplication.run(arguments);
-
 		SpringApplication.run(AccelerateUtilsTest.class);
 	}
 }

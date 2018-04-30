@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
@@ -183,24 +182,22 @@ public final class CommonUtils {
 		Assert.state(StringUtils.isNotEmpty(aCommand), "Invalid Input. Command cannot be empty");
 		_LOGGER.debug("OSCommand [{}]", aCommand);
 
-		BufferedReader reader = null;
 		String outputLine = null;
 		StringBuilder outputBuffer = new StringBuilder();
 
 		try {
 			Process process = Runtime.getRuntime().exec(aCommand, aEnvSettings,
 					(aExecuteDir != null) ? aExecuteDir : SystemUtils.getJavaIoTmpDir());
-			reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-			while ((outputLine = reader.readLine()) != null) {
-				outputBuffer.append(outputLine);
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));) {
+				while ((outputLine = reader.readLine()) != null) {
+					outputBuffer.append(outputLine);
+				}
 			}
 
 			_LOGGER.debug("OSCommand Output =>\n{}", outputBuffer);
 		} catch (IOException error) {
 			throw new AccelerateException(error);
-		} finally {
-			IOUtils.closeQuietly(reader);
 		}
 
 		return outputBuffer.toString();

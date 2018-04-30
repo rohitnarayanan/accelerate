@@ -22,7 +22,13 @@ import accelerate.utils.exception.AccelerateException;
  * @author Rohit Narayanan
  * @since October 2, 2017
  */
-public class LogUtil {
+public final class LogUtil {
+	/**
+	 * hidden constructor
+	 */
+	private LogUtil() {
+	}
+
 	/**
 	 * @param aLogger
 	 * @param aLogLevel
