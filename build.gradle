@@ -24,7 +24,6 @@ repositories {
 	mavenLocal()
 }
 
-apply plugin: "java"
 apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 apply plugin: "maven"
@@ -47,13 +46,13 @@ project.ext.buildDate = new Date().format("yyyyMMdd");
  */
 dependencies {
 	// compile dependencies
-	implementation ("org.springframework.boot:spring-boot-starter")
-	implementation ("org.springframework.boot:spring-boot-starter-aop")
+	api ("org.springframework.boot:spring-boot-starter")
+	api ("org.springframework.boot:spring-boot-starter-aop")
 	implementation ("org.apache.commons:commons-lang3")
 	implementation ("commons-io:commons-io")
 	implementation ("com.fasterxml.jackson.core:jackson-databind")
 	implementation ("org.springframework:spring-jdbc")
-	implementation ("javax.servlet:javax.servlet-api")
+	compileOnly ("javax.servlet:javax.servlet-api")
 	
 	//test dependencies
 	testImplementation ("org.springframework.boot:spring-boot-starter-test")
@@ -102,12 +101,12 @@ build.finalizedBy install
  */
 eclipse {
 	project {
-		natures = ["org.eclipse.buildship.core.gradleprojectnature", "org.eclipse.ajdt.ui.ajnature", 
+		natures = ["org.eclipse.buildship.core.gradleprojectnature", //"org.eclipse.ajdt.ui.ajnature", 
 			"org.springframework.ide.eclipse.core.springnature", "org.eclipse.wst.common.project.facet.core.nature", 
 			"org.eclipse.jdt.core.javanature"]
 		
 		buildCommand "org.eclipse.buildship.core.gradleprojectbuilder"
-		buildCommand "org.eclipse.ajdt.core.ajbuilder"
+		//buildCommand "org.eclipse.ajdt.core.ajbuilder"
 		buildCommand "org.springframework.ide.eclipse.core.springbuilder"
 		buildCommand "org.springframework.ide.eclipse.boot.validation.springbootbuilder"
 		buildCommand "org.eclipse.wst.common.project.facet.core.builder"
